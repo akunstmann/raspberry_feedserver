@@ -22,7 +22,7 @@
 import time, logging, sys
 from http.server import HTTPServer
 import feedserver_classes
-import leto_bahn, leto_auto, leto_schule
+import leto_bahn, leto_auto     #, leto_schule
 
 rss_feed_items = list()
 rss_feeds = list()
@@ -48,7 +48,7 @@ def main():
     # Feeds vorbereiten
     rss_feeds.append(feedserver_classes.feed('bahn', 'DB Zuginformation', 'http://mediathek.deutschebahn.com/marsDB/pub/images/header_logo.png', 120, time.time()))
     rss_feeds.append(feedserver_classes.feed('auto', 'SWR Stauinformation', 'http://www.swr3.de/aktuell/verkehr/stauanzeige/-/id=64076/cf=42/62axcq/index.html', 300, time.time()))
-    rss_feeds.append(feedserver_classes.feed('schule', 'Vertretungsplan Gymnasium Walldorf', 'https://www.schulinternes.de/isis/isis-vertretungen.php', 600, time.time()))
+    #rss_feeds.append(feedserver_classes.feed('schule', 'Vertretungsplan Gymnasium Walldorf', 'https://www.schulinternes.de/isis/isis-vertretungen.php', 600, time.time()))
 
     # Webserver starten
     rss_server = feedserver_classes.WebserverThread(8080)
@@ -59,9 +59,9 @@ def main():
     bahninfo.start()
     bahninfo.join()
 
-    schulinfo = leto_schule.leto_schule(rss_feeds, rss_feed_items, logger, 'schule')
-    schulinfo.start()
-    schulinfo.join()
+    #schulinfo = leto_schule.leto_schule(rss_feeds, rss_feed_items, logger, 'schule')
+    #schulinfo.start()
+    #schulinfo.join()
 
     autoinfo = leto_auto.leto_auto(rss_feeds, rss_feed_items, logger, 'auto')
     autoinfo.start()
@@ -79,9 +79,10 @@ def main():
                         bahninfo.start()
                         bahninfo.join()
                     if feed.feed == 'schule':
-                        schulinfo = leto_schule.leto_schule(rss_feeds, rss_feed_items, 'schule')
-                        schulinfo.start()
-                        schulinfo.join()
+                        #schulinfo = leto_schule.leto_schule(rss_feeds, rss_feed_items, 'schule')
+                        #schulinfo.start()
+                        #schulinfo.join()
+                        pass
                     if feed.feed == 'auto':
                         autoinfo = leto_auto.leto_auto(rss_feeds, rss_feed_items, 'auto')
                         autoinfo.start()
